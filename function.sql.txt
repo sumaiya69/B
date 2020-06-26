@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION totalMovie
+RETURN number IS
+   total number(5) := 0;
+BEGIN
+   SELECT count(*) into total
+   FROM movie_info;
+   RETURN total;
+END;
+/
+
+
+CREATE OR REPLACE FUNCTION totalActors
+RETURN number IS
+   total number(5) := 0;
+BEGIN
+   SELECT count(*) into total
+   FROM actor_info;
+   RETURN total;
+END;
+/
+
+
+CREATE OR REPLACE FUNCTION totalMoviesAndActors
+RETURN number IS
+   total number(5) := 0;
+BEGIN
+   total := totalMovie()+totalActors();
+   RETURN total;
+END;
+
+
+DECLARE
+   t number(5);
+BEGIN
+   t := totalMoviesAndActors();
+   dbms_output.put_line('Total No. Of Movies & Actors :' || t);
+END;
+/
+

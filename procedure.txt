@@ -1,0 +1,24 @@
+set serveroutput on
+
+create or replace procedure findProducer ( X in PRODUCER_INFO.NAME%type, Y out number,Z out number) is
+    producerID PRODUCER_INFO.PRODUCER_ID%type;
+begin
+    SELECT producer_id into producerID from producer where name = X;
+    SELECT count (*) into Y from actor where producer_id=producerID;
+    SELECT count (*) into Z from movie where producer_id=producerID;
+end;
+/
+
+
+declare
+    producerName PRODUCER_INFO.NAME%type,
+    TotalActor number;
+    TotalMovie number;
+begin
+    producerName:='Spilburg';
+    findProducer(producerName, TotalActor, TotalMovie);
+    dbms_output.put_line('Total no. of ' || producerName ||' Actors ' || TotalActor
+    || 'Movies' || TotalMovie );
+end;
+/
+

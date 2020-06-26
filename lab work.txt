@@ -1,0 +1,32 @@
+set serveroutput on
+
+declare
+
+type name is varray(10) of producer.name%type;
+nameArr name:=name();
+type gender is varray(10) of producer.gender%type;
+genderArr gender:=gender();
+
+counter number(2);
+
+begin
+for counter in 1..3
+loop
+nameArr.extend;
+genderArr.extend;
+select name,gender into nameArr(counter),genderArr(counter) from producer where id=counter;
+end loop;
+
+for counter in 1..3
+loop
+if(genderArr(counter)='male') or (genderArr(counter)='female')
+then
+dbms_output.put_line('nameArr(counter));
+end if;
+end loop;
+exception
+when others then
+dbms_output.put_line('Error occured!');
+end;
+
+/
